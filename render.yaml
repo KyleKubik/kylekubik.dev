@@ -1,0 +1,21 @@
+services:
+  # Main Astro site — kylekubik.dev
+  # Future subdomain apps get their own service entry here (public apps)
+  # or their own repo + render.yaml (private apps). See README.
+  - type: web
+    name: kylekubik-dev-site
+    runtime: static
+    rootDir: apps/site
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    domains:
+      - kylekubik.dev
+      - www.kylekubik.dev
+    buildFilter:
+      # Paths are relative to the REPO ROOT (per Render docs), not rootDir.
+      paths:
+        - apps/site/**
+        - render.yaml
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
