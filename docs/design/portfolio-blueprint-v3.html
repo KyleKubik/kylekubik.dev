@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kyle Kubik — Blueprint v3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  :root {
+    --ink:#1f4e79;        /* blueprint blue */
+    --ink-soft:#3a6899;
+    --paper:#f1f1ee;      /* cool off-white / drafting paper */
+    --paper-hi:#f8f8f6;
+    --text:#2c2f31;
+    --dim:#8c8b82;
+    --line:#e0dccf;       /* warm hairline */
+    --accent:#c2622a;     /* drafting orange / Auburn */
+  }
+
+  body {
+    background:var(--paper); color:var(--text);
+    font-family:'Inter',sans-serif; font-size:16px; line-height:1.6;
+    min-height:100vh;
+  }
+
+  .sheet { max-width:820px; margin:0 auto; padding:0 44px; position:relative; }
+
+  /* faint grid ONLY behind the masthead */
+  .masthead {
+    padding:96px 0 44px; position:relative;
+    background-image:
+      linear-gradient(var(--ink) 1px, transparent 1px),
+      linear-gradient(90deg, var(--ink) 1px, transparent 1px);
+    background-size:26px 26px;
+    background-position:-1px -1px;
+  }
+  /* fade the grid out toward the bottom + sides so it reads as margin, not wallpaper */
+  .masthead::after {
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:
+      linear-gradient(to bottom, transparent 40%, var(--paper) 96%),
+      radial-gradient(ellipse 80% 70% at 50% 35%, transparent 55%, var(--paper) 90%);
+  }
+  /* the grid lines are barely there */
+  .masthead { background-blend-mode:normal; }
+  .masthead > * { position:relative; z-index:1; }
+
+  /* soften grid opacity via an overlay tint */
+  .masthead::before {
+    content:""; position:absolute; inset:0; z-index:0;
+    background:var(--paper); opacity:0.93;
+  }
+
+  /* corner registration ticks on the masthead */
+  .reg { position:absolute; width:14px; height:14px; z-index:2; }
+  .reg::before, .reg::after { content:""; position:absolute; background:var(--ink); opacity:0.5; }
+  .reg::before { width:14px; height:1px; top:0; }
+  .reg::after  { width:1px; height:14px; left:0; }
+  .reg.tl { top:70px; left:44px; }
+  .reg.tr { top:70px; right:44px; transform:scaleX(-1); }
+
+  .kicker {
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--ink); margin-bottom:20px;
+  }
+  h1 { font-size:46px; font-weight:600; letter-spacing:-1px; color:#1a1f24; line-height:1.05; }
+  .lede { margin-top:20px; font-size:19px; line-height:1.5; color:var(--text); max-width:600px; }
+  .lede b { color:var(--ink); font-weight:600; }
+
+  /* dimension-line section divider */
+  .sec {
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--dim);
+    margin:52px 0 4px; display:flex; align-items:center; gap:12px;
+  }
+  .sec::before { content:"⌖"; color:var(--accent); font-size:15px; }
+  .sec::after {
+    content:""; flex:1; height:5px; position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  /* end ticks on the dimension line */
+  .sec .tick { flex:none; }
+
+  .work { margin-top:8px; }
+  .proj {
+    padding:26px 0; border-bottom:1px solid var(--line);
+    display:grid; grid-template-columns:1fr auto; gap:24px; align-items:baseline;
+    position:relative;
+  }
+  .proj:first-child { border-top:1px solid var(--line); }
+  .proj:hover h3 { color:var(--ink); }
+  .proj h3 { font-size:21px; font-weight:600; color:#1a1f24; transition:color .15s; margin-bottom:5px; }
+  .proj p { font-size:15px; color:var(--text); max-width:520px; line-height:1.55; }
+  .proj .tags { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--dim); margin-top:9px; }
+  .proj .metric { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--accent); text-align:right; white-space:nowrap; line-height:1.5; }
+
+  /* ---- title-block footer: visual drafting frame, plain labels ---- */
+  .titleblock {
+    margin:56px 0 60px; border:1.5px solid var(--ink);
+    display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+    background:var(--paper-hi);
+  }
+  .titleblock .cell { padding:12px 16px; border-right:1px solid var(--line); }
+  .titleblock .cell:last-child { border-right:none; }
+  .titleblock .cell.wide { display:flex; flex-direction:column; justify-content:center; }
+  .titleblock .lbl {
+    font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:1px;
+    text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px; display:block;
+  }
+  .titleblock .val { font-size:14px; font-weight:500; color:var(--text); }
+  .titleblock .val.name { font-size:16px; font-weight:600; color:#1a1f24; }
+  .titleblock .val a { color:var(--ink); text-decoration:none; }
+  .titleblock .val a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+  <div class="sheet">
+
+    <div class="masthead">
+      <span class="reg tl"></span>
+      <span class="reg tr"></span>
+      <div class="kicker">Multidisciplinary Engineer</div>
+      <h1>Kyle Kubik</h1>
+      <p class="lede">Embedded firmware, PCB and mechanical design, and the <b>leadership to ship it</b> — across race cars, marine radar, and nuclear robotics.</p>
+    </div>
+
+    <div class="sec">Selected Work</div>
+    <div class="work">
+      <div class="proj">
+        <div><h3>ProteusCore</h3><p>AI-assisted radar processing platform with a headless API for commercial and defense integrations.</p><div class="tags">C++ · Qt · Systems Architecture</div></div>
+        <div class="metric">100s of vessels<br>in production</div>
+      </div>
+      <div class="proj">
+        <div><h3>APEX Pro</h3><p>Digital driving coach for semi-pro racers — Arduino prototype to production embedded platform.</p><div class="tags">Firmware · nRF52832 · BLE</div></div>
+        <div class="metric">2 hardware<br>generations</div>
+      </div>
+      <div class="proj">
+        <div><h3>Auburn FSAE</h3><p>Led an 18-engineer aero program to Auburn's first overall competition win.</p><div class="tags">Chief Chassis Engineer</div></div>
+        <div class="metric">1st overall<br>Nebraska 2016</div>
+      </div>
+      <div class="proj">
+        <div><h3>Nuclear Robotics</h3><p>ARPA-E SBIR: single-camera pose estimation for robotic tool alignment in a reactor.</p><div class="tags">Python · Computer Vision</div></div>
+        <div class="metric">published<br>pixel-to-pose</div>
+      </div>
+    </div>
+
+    <div class="titleblock">
+      <div class="cell wide">
+        <span class="lbl">Name</span>
+        <span class="val name">Kyle Kubik</span>
+      </div>
+      <div class="cell">
+        <span class="lbl">Role</span>
+        <span class="val">Director of Engineering</span>
+      </div>
+      <div class="cell">
+        <span class="lbl">Location</span>
+        <span class="val">Birmingham, AL</span>
+      </div>
+      <div class="cell">
+        <span class="lbl">Site</span>
+        <span class="val"><a href="#">kylekubik.dev</a></span>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
