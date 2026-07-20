@@ -1,6 +1,6 @@
 # Phase 1 — Skeleton & Deploy Path Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** An Astro site scaffolded at `apps/site/` with one placeholder page, deploying automatically to `kylekubik.dev` on every push to `main` via a Render Blueprint.
 
@@ -26,12 +26,12 @@
 **Interfaces:**
 - Produces: `main` as the default branch (GitHub push in Task 6 depends on it).
 
-- [ ] **Step 1: Rename branch to main**
+- [x] **Step 1: Rename branch to main**
 
 Run: `git branch -M main`
 Expected: `git branch` shows `* main`.
 
-- [ ] **Step 2: Create .gitignore**
+- [x] **Step 2: Create .gitignore**
 
 ```gitignore
 # dependencies
@@ -54,7 +54,7 @@ Thumbs.db
 npm-debug.log*
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add .gitignore
@@ -72,7 +72,7 @@ git commit -m "chore: add .gitignore, rename branch to main"
 - Consumes: repo structure from the approved spec.
 - Produces: the documented "add a subdomain app" pattern required by PRD §7.
 
-- [ ] **Step 1: Write README.md**
+- [x] **Step 1: Write README.md**
 
 ```markdown
 # kylekubik.dev
@@ -124,7 +124,7 @@ Interactive projects deploy as separate Render services on subdomains
 Secrets never live in any repo — use Render environment variables.
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add README.md
@@ -141,7 +141,7 @@ git commit -m "docs: add README with layout and subdomain-app playbook"
 **Interfaces:**
 - Produces: `apps/site/package.json` with `dev`/`build`/`preview` scripts; `apps/site/src/pages/index.astro` (replaced in Task 4).
 
-- [ ] **Step 1: Scaffold the project**
+- [x] **Step 1: Scaffold the project**
 
 Run (from repo root):
 ```bash
@@ -149,16 +149,16 @@ npm create astro@latest apps/site -- --template minimal --install --no-git --yes
 ```
 Expected: `apps/site/` exists with `package.json`, `astro.config.mjs`, `src/pages/index.astro`. Dependency list contains **only** `astro`.
 
-- [ ] **Step 2: Verify the build works**
+- [x] **Step 2: Verify the build works**
 
 Run: `cd apps/site && npm run build`
 Expected: `Complete!` with output in `apps/site/dist/index.html`. No errors.
 
-- [ ] **Step 3: Verify dependency minimalism**
+- [x] **Step 3: Verify dependency minimalism**
 
 Check `apps/site/package.json` — `dependencies` must contain only `astro`. If the template added anything else, remove it and re-run `npm install`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add apps/site
@@ -176,7 +176,7 @@ git commit -m "feat: scaffold Astro site at apps/site (minimal template)"
 - Consumes: nothing from other tasks.
 - Produces: the single page Phase 1 ships. Throwaway — Phase 2 replaces it with real components; do NOT build design-system components here.
 
-- [ ] **Step 1: Replace index.astro**
+- [x] **Step 1: Replace index.astro**
 
 Minimal, using the design tokens inline (full token system arrives in Phase 2 from Claude Design):
 
@@ -229,12 +229,12 @@ Minimal, using the design tokens inline (full token system arrives in Phase 2 fr
 </html>
 ```
 
-- [ ] **Step 2: Verify build and content**
+- [x] **Step 2: Verify build and content**
 
 Run: `cd apps/site && npm run build`
 Expected: build succeeds; `dist/index.html` contains `Kyle Kubik`.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add apps/site/src/pages/index.astro
@@ -251,7 +251,7 @@ git commit -m "feat: on-brand placeholder home page"
 **Interfaces:**
 - Produces: the static-site service definition Render reads in Task 7. Service name `kylekubik-dev-site`.
 
-- [ ] **Step 1: Write render.yaml**
+- [x] **Step 1: Write render.yaml**
 
 ```yaml
 services:
@@ -274,7 +274,7 @@ services:
 
 Note: with `rootDir` set, `buildFilter.paths` are relative to `rootDir`, so `"**"` means "only changes under `apps/site/`". Verify against current Render docs at execution time; if paths turn out to be repo-root-relative, use `apps/site/**` instead.
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add render.yaml
@@ -292,7 +292,7 @@ git commit -m "feat: Render Blueprint for static site with build filter"
 - Consumes: `main` branch (Task 1).
 - Produces: GitHub repo `kylekubik.dev` with all commits pushed; MCP servers available next session.
 
-- [ ] **Step 1: Write .mcp.json (PRD §10 — Render + GitHub only; Postgres comes later)**
+- [x] **Step 1: Write .mcp.json (PRD §10 — Render + GitHub only; Postgres comes later)**
 
 ```json
 {
@@ -311,14 +311,14 @@ git commit -m "feat: Render Blueprint for static site with build filter"
 
 Both are OAuth-based remote servers — Claude Code will prompt to authenticate on first use; no tokens in the repo.
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add .mcp.json
 git commit -m "chore: project-scoped MCP config (Render, GitHub)"
 ```
 
-- [ ] **Step 3: Create the GitHub repo and push** ⚠️ *needs `gh` auth — if `gh auth status` fails, stop and ask Kyle to run `gh auth login`*
+- [x] **Step 3: Create the GitHub repo and push** ⚠️ *needs `gh` auth — if `gh auth status` fails, stop and ask Kyle to run `gh auth login`*
 
 ```bash
 gh repo create kylekubik.dev --public --source . --push
@@ -335,7 +335,7 @@ Expected: repo visible at `github.com/<kyle's-username>/kylekubik.dev`, `main` p
 - Consumes: GitHub repo (Task 6), `render.yaml` (Task 5).
 - Produces: live site at `kylekubik.dev`; auto-deploy on push (Phase 1 acceptance criterion).
 
-- [ ] **Step 1: Connect the Blueprint (Kyle, in Render dashboard — one-time)**
+- [x] **Step 1: Connect the Blueprint (Kyle, in Render dashboard — one-time)**
 
 Render Dashboard → **New → Blueprint** → select the `kylekubik.dev` GitHub repo → approve. Render reads `render.yaml` and creates `kylekubik-dev-site`.
 
