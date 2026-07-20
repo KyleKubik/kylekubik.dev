@@ -339,7 +339,7 @@ Expected: repo visible at `github.com/<kyle's-username>/kylekubik.dev`, `main` p
 
 Render Dashboard → **New → Blueprint** → select the `kylekubik.dev` GitHub repo → approve. Render reads `render.yaml` and creates `kylekubik-dev-site`.
 
-- [ ] **Step 2: Configure DNS (Kyle, in Porkbun)**
+- [x] **Step 2: Configure DNS (Kyle, in Porkbun)**
 
 Render's dashboard shows the exact records after Step 1; per current Render docs they are:
 - `kylekubik.dev` (apex): **A** record → Render's static-site IP (shown in the service's Custom Domains tab)
@@ -347,14 +347,14 @@ Render's dashboard shows the exact records after Step 1; per current Render docs
 
 Delete Porkbun's default parked-page records. Keep any existing email-forwarding (MX) records untouched.
 
-- [ ] **Step 3: Verify the acceptance criterion**
+- [x] **Step 3: Verify the acceptance criterion**
 
 After DNS propagates (minutes to ~1 hour):
 Run: `curl -sL https://kylekubik.dev | grep "Kyle Kubik"`
 Expected: matches the placeholder `<h1>`.
 Then make a trivial commit (e.g. bump README) touching `apps/site/`, push, and confirm Render auto-deploys. Also confirm a docs-only commit does **not** trigger a build (buildFilter working).
 
-- [ ] **Step 4: Mark Phase 1 done**
+- [x] **Step 4: Mark Phase 1 done**
 
 Update this plan's checkboxes, commit:
 ```bash
